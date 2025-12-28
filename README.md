@@ -1,99 +1,72 @@
-# 📍 Place Reviews REST API
+```markdown
+# Place Reviews REST API
 
-A **production-quality REST API** built using **Django** and **Django REST Framework** that allows authenticated users to review places such as shops, doctors, restaurants, etc.
+A production-quality REST API built using **Django** and **Django REST Framework** that allows authenticated users to review places such as shops, doctors, restaurants, etc.
 
-This project focuses on **clean data modeling**, **correct API design**, and **edge-case handling**, rather than excessive features.
+This project focuses on **clean data modeling**, **correct API design**, and **real-world deployment**, rather than excessive features.
 
 ---
 
-## 🧠 Problem Overview
+## 🌐 Live Demo
 
-The API allows users to:
+### 🔹 Backend API (Render)
+https://place-reviews-api.onrender.com
 
-* Register using **phone number**
-* Authenticate using **token-based authentication**
-* Add reviews for places
-* Search places by name and rating
-* View place details with reviews
+Example:
+```
 
-There is **no public access** — all APIs require authentication.
+GET /search/
+
+````
+
+### 🔹 Demo UI (Streamlit)
+https://appapppy-zlpvvb3ten8jzfyzxipwty.streamlit.app/
+
+The Streamlit UI is provided **only for demonstration** and consumes the same REST APIs used by any frontend or mobile app.
 
 ---
 
 ## 🧠 Assumptions
 
-* Each user registers using a **unique phone number**
-* A user can review a place **only once**
-* A place is uniquely identified by **(name, address)**
-* All APIs require authentication (except registration)
-* No third-party services are used
-* SQLite is used for simplicity and portability
+- All APIs require authentication except user registration and place search
+- Users register using a **unique phone number**
+- A user can review a place **only once**
+- A place is uniquely identified by **(name, address)**
+- No third-party services are used
+- SQLite is used for simplicity (for demo/assignment purposes)
 
 ---
 
 ## ⚙️ Tech Stack
 
-* Python 3
-* Django
-* Django REST Framework
-* SQLite
-* Token Authentication
+- Python 3
+- Django
+- Django REST Framework
+- SQLite
+- Token Authentication
+- Streamlit (demo UI)
+- Render (deployment)
 
 ---
 
-## 🚀 Project Setup
-
-### 1️⃣ Clone Repository
-
-```bash
-git clone https://github.com/<your-username>/place-reviews-api.git
-cd place-reviews-api
-```
-
----
-
-### 2️⃣ Create Virtual Environment
+## 🚀 Project Setup (Local)
 
 ```bash
 python -m venv venv
-venv\Scripts\activate   # Windows
-```
-
----
-
-### 3️⃣ Install Dependencies
-
-```bash
-pip install django djangorestframework
-```
-
----
-
-### 4️⃣ Run Migrations
+venv\Scripts\activate
+pip install -r requirements.txt
+````
 
 ```bash
 python manage.py migrate
-```
-
----
-
-### 5️⃣ Start Server
-
-```bash
 python manage.py runserver
-```
-
-Server runs at:
-
-```
-http://127.0.0.1:8000/
 ```
 
 ---
 
 ## 🔐 Authentication
 
-This API uses **Token Authentication**.
+Token-based authentication is used.
 
 Include the token in request headers:
 
@@ -105,13 +78,9 @@ Authorization: Token <your_token>
 
 ## 📌 API Endpoints
 
----
-
 ### 1️⃣ Register User
 
 **POST** `/register/`
-
-Request Body:
 
 ```json
 {
@@ -121,36 +90,25 @@ Request Body:
 }
 ```
 
-Response:
-
-```json
-{
-  "message": "User registered successfully",
-  "token": "<auth_token>"
-}
-```
-
 ---
 
 ### 2️⃣ Add Review (Authenticated)
 
 **POST** `/review/`
 
-Request Body:
-
 ```json
 {
   "name": "Shop1",
   "address": "Street1",
   "rating": 5,
-  "text": "Excellent service"
+  "text": "Great service"
 }
 ```
 
 Rules:
 
 * One review per user per place
-* Duplicate reviews are rejected
+* Duplicate reviews are blocked
 
 ---
 
@@ -160,76 +118,68 @@ Rules:
 
 Features:
 
-* Exact name matches shown first
-* Partial name search supported
-* Filter by minimum average rating
+* Exact match prioritization
+* Partial search support
+* Filter by minimum rating
 
 ---
 
-### 4️⃣ Place Detail View
+### 4️⃣ Place Detail
 
 **GET** `/place/<place_id>/`
 
 Returns:
 
-* Place name and address
+* Place details
 * Average rating
 * All reviews
-* **Current user’s review is shown first**
+* Current user’s review shown first
 
 ---
 
-## 🧪 Data Population Script
+## 🎨 Demo UI (Streamlit)
 
-A helper script is included to generate sample data quickly.
-
-### 📍 Location
-
-```
-scripts/populate_data.py
-```
-
-### ▶️ Run Script
+A lightweight Streamlit UI is included for demonstration.
 
 ```bash
-python manage.py shell
+streamlit run streamlit_app.py
 ```
 
-```python
-from scripts.populate_data import run
-run()
-```
+The UI interacts only with the REST APIs and does not contain any backend logic.
 
-This creates:
+---
 
-* 5 users
-* 5 places
-* 15 reviews
+## 📦 Deployment Notes
+
+* Backend deployed on **Render**
+* Streamlit UI deployed on **Streamlit Community Cloud**
+* Database is SQLite (non-persistent on redeploy)
+* For production use, PostgreSQL would be preferred
 
 ---
 
 ## ✅ Key Highlights
 
-* Custom user model with **phone-based authentication**
-* Strong database constraints to prevent duplicates
-* Clean API structure
-* Proper error handling
-* Realistic test data
-* Ready for frontend integration
-
----
-
-## 📦 Submission Notes
-
-* No unnecessary dependencies
-* Clean and readable codebase
-* SQLite database excluded from repository
-* Suitable for production extension
+* Custom user model with phone-based login
+* Proper database constraints
+* Clean API design
+* Real deployment experience
+* Clear separation of backend and UI
 
 ---
 
 ## 🏁 Conclusion
 
-This project demonstrates **backend fundamentals**, **REST API design**, and **real-world Django practices** with a strong emphasis on correctness and clarity.
+This project demonstrates backend fundamentals, REST API design, authentication, and real-world deployment using Django.
+
+````
 
 ---
+
+👉 Commit README:
+
+```bash
+git add README.md
+git commit -m "Update README with live deployment and demo links"
+git push
+````
