@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: place-reviews-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn place_reviews.wsgi:application
